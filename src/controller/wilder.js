@@ -1,5 +1,7 @@
 const dataSource = require("../utils").dataSource;
 const Wilder = require("../entity/Wilder");
+const Skill = require("../entity/Skill");
+const Grades = require("../entity/Grade");
 
 module.exports = {
   create: async (req, res) => {
@@ -13,9 +15,27 @@ module.exports = {
   },
   read: async (req, res) => {
     try {
-      await dataSource.getRepository(Wilder).find();
+      const grades = await dataSource.getRepository(Grades).find();
 
-      res.send("Wilders list");
+      const wilders = await dataSource.getRepository(Wilder).find();
+
+      const data = wilders.map((wilder) => {
+        const wilderGrades = grades.filter((grade) => grade.wilder.id === wilder.id);
+
+        const wilderGradesLean = wilderGrades.map((el) => {
+          return { title: el.skill.name, votes: el.grade };
+        });
+
+        const result = {
+          ...wilder,
+          skills: wilderGradesLean,
+        };
+        console.log(result);
+
+        return result;
+      });
+
+      res.send(data);
     } catch (error) {
       res.send("Error while getting wilders");
     }
@@ -26,7 +46,7 @@ module.exports = {
 
       res.send("Wilder Updated");
     } catch (error) {
-      res.send("Error while deleting wilder");
+      res.send("Error while updating wilder:", error);
     }
   },
   delete: (req, res) => {
