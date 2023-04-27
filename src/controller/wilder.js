@@ -15,6 +15,7 @@ module.exports = {
   },
   read: async (req, res) => {
     try {
+      console.log("!!***");
       const grades = await dataSource.getRepository(Grades).find();
 
       const wilders = await dataSource.getRepository(Wilder).find();
@@ -30,14 +31,13 @@ module.exports = {
           ...wilder,
           skills: wilderGradesLean,
         };
-        console.log(result);
 
         return result;
       });
 
       res.send(data);
     } catch (error) {
-      res.send("Error while getting wilders");
+      res.send("Error while getting wilders!");
     }
   },
   update: async (req, res) => {

@@ -16,8 +16,6 @@ module.exports = {
         .getRepository(Skill)
         .findOneBy({ name: req.body.skill });
 
-      console.log(skillFromDB);
-
       await dataSource
         .getRepository(Grade)
         .save({ grade: req.body.grade, skill: skillFromDB, wilder: wilderFromDB });

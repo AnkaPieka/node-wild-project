@@ -2,7 +2,7 @@ POST http://localhost:5000/api/wilder
 Content-Type: application/json
 
 {
-    "name": "Billy"
+    "name": "Dwight Schrute"
 }
 
 ###
@@ -14,9 +14,9 @@ PUT http://localhost:5000/api/wilder
 Content-Type: application/json
 
 {
-    "id": 7,
+    "id": 1,
     "newData": {
-        "name": "John"
+        "skills": "Scranton"
     }
 }
 
